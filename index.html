@@ -24,6 +24,19 @@
         { name: "G03", runningHr: 500, nextPmHr: 500 }
       ];
     };
+
+    function getPmStatus(gen) {
+      let hrLeft = gen.nextPmHr - gen.runningHr;
+      if (hrLeft < 0) {
+        return (0 - hrLeft) + " hr over. ";
+      } else if (hrLeft === 0) {
+        return "PM due now. ";
+      } else if (hrLeft <= 50) {
+        return hrLeft + " hr left, PM soon. ";
+      } else {
+        return hrLeft + " hr left. ";
+      };// 
+    };//getPmStatus(gens[0])
   </script>
 
 </body>
