@@ -28,15 +28,30 @@
     function getPmStatus(gen) {
       let hrLeft = gen.nextPmHr - gen.runningHr;
       if (hrLeft < 0) {
-        return (0 - hrLeft) + " hr over. ";
+        return (0 - hrLeft) + " hr over";
       } else if (hrLeft === 0) {
-        return "PM due now. ";
+        return "PM due now";
       } else if (hrLeft <= 50) {
-        return hrLeft + " hr left, PM soon. ";
+        return hrLeft + " hr left, PM soon";
       } else {
-        return hrLeft + " hr left. ";
+        return hrLeft + " hr left";
       };// 
     };//getPmStatus(gens[0])
+
+    function showTable() {
+      let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Status</th><th></th></tr>";
+      for (let i = 0; i < gens.length; i++) {
+        rows = rows + "<tr>";
+        rows = rows + "<td>" + gens[i].name + "</td>";
+        rows = rows + "<td>" + gens[i].runningHr + "</td>";
+        rows = rows + "<td>" + gens[i].nextPmHr + "</td>";
+        rows = rows + "<td>" + getPmStatus(gens[i]) + "</td>";
+        rows = rows + "<td><button onclick='deleteGen()'>delete</button></td>"
+        rows = rows + "</tr>";
+      };//for
+      document.getElementById("pmTable").innerHTML = rows;
+    };//showTable()
+    showTable()
   </script>
 
 </body>
