@@ -11,7 +11,7 @@
   <h1>Service Helper</h1>
   <input id="nameBox">
   <input id="runBox" type="number">
-  <input id="nextBox" tupe="number">
+  <input id="nextBox" type="number">
   <button onclick="addGen()">Add</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
@@ -46,7 +46,7 @@
         rows = rows + "<td>" + gens[i].runningHr + "</td>";
         rows = rows + "<td>" + gens[i].nextPmHr + "</td>";
         rows = rows + "<td>" + getPmStatus(gens[i]) + "</td>";
-        rows = rows + "<td><button onclick='deleteGen()'>delete</button></td>"
+        rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>"
         rows = rows + "</tr>";
       };//for
       document.getElementById("pmTable").innerHTML = rows;
@@ -83,7 +83,14 @@
       document.getElementById("nextBox").value = "";
     };//addGen()
 
-    
+    function deleteGen(i) {
+      let name = gens[i].name;
+      gens.splice(i, 1);
+      localStorage.setItem("pmTable", JSON.stringify(gens));
+      showTable();
+      document.getElementById("msg").textContent = name + " deleted";
+    };//deleteGen()
+
   </script>
 
 </body>
