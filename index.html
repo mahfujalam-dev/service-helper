@@ -15,8 +15,16 @@
   <button onclick="addGen()">Add</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
-  
-
+  <script>
+    let gens = JSON.parse(localStorage.getItem("pmTable"));
+    if (gens === null) {
+      gens = [
+        { name: "G01", runningHr: 1200, nextPmHr: 1250 },
+        { name: "G02", runningHr: 2010, nextPmHr: 2000 },
+        { name: "G03", runningHr: 500, nextPmHr: 500 }
+      ];
+    };
+  </script>
 
 </body>
 
