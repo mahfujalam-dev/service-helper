@@ -52,6 +52,38 @@
       document.getElementById("pmTable").innerHTML = rows;
     };//showTable()
     showTable()
+
+    function addGen() {
+      let name = document.getElementById("nameBox").value.toUpperCase();
+      let runningHr = document.getElementById("runBox").value;
+      let nextPmHr = document.getElementById("nextBox").value;
+      if (name === "") {
+        document.getElementById("msg").textContent = "Please write generator name";
+        return;
+      };
+      if (runningHr === "") {
+        document.getElementById("msg").textContent = "Please write running hours";
+        return;
+      };
+      if (nextPmHr === "") {
+        document.getElementById("msg").textContent = "Please write next PM hours";
+        return;
+      };
+      let newGen = {
+        name: name,
+        runningHr: Number(document.getElementById("runBox").value),
+        nextPmHr: Number(document.getElementById("nextBox").value)
+      };
+      gens.push(newGen);
+      localStorage.setItem("pmTable", JSON.stringify(gens));
+      showTable();
+      document.getElementById("msg").textContent = name + " added";
+      document.getElementById("nameBox").value = "";
+      document.getElementById("runBox").value = "";
+      document.getElementById("nextBox").value = "";
+    };//addGen()
+
+    
   </script>
 
 </body>
