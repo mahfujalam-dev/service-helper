@@ -84,6 +84,44 @@
       document.getElementById("nextBox").value = "";
     };//addGen()
 
+
+    function updateGen() {
+      let name = document.getElementById("nameBox").value.toUpperCase();
+      let runningHr = document.getElementById("runBox").value;
+      if (name === "") {
+        document.getElementById("msg").textContent = "Please write generator name";
+        return;
+      };
+      if (runningHr === "") {
+        document.getElementById("msg").textContent = "Please write running hours";
+        return;
+      };
+      for (let i = 0; i < gens.length; i++) {
+        if (name === gens[i].name) {
+          gens[i].runningHr = Number(document.getElementById("runBox").value);
+          localStorage.setItem("pmTable", JSON.stringify(gens));
+          showTable();
+          document.getElementById("msg").textContent = name + " updated";
+          return;
+        };
+      };// for
+      document.getElementById("msg").textContent = "Not found";
+    };//updateGen()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function deleteGen(i) {
       let name = gens[i].name;
       gens.splice(i, 1);
