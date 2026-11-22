@@ -16,6 +16,7 @@
   <button onclick="updateGen()">Update</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
+  <p id="summary"></p>
   <script>
     let gens = JSON.parse(localStorage.getItem("pmTable"));
     if (gens === null) {
@@ -41,6 +42,9 @@
 
     function showTable() {
       let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Status</th><th></th></tr>";
+      let over = 0;
+      let dueNow = 0;
+      let soon = 0;
       for (let i = 0; i < gens.length; i++) {
         rows = rows + "<tr>";
         rows = rows + "<td>" + gens[i].name + "</td>";
@@ -49,8 +53,17 @@
         rows = rows + "<td>" + getPmStatus(gens[i]) + "</td>";
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>"
         rows = rows + "</tr>";
+        let hrLeft = gens[i].nextPmHr - gens[i].runningHr;
+        if (hrLeft < 0) {
+          over = over + 1;
+        } else if (hrLeft === 0) {
+          dueNow = dueNow + 1;
+        } else if (hrLeft <= 50) {
+          soon = soon + 1;
+        };
       };//for
       document.getElementById("pmTable").innerHTML = rows;
+      document.getElementById("summary").textContent = "Over: " + over + " | Due now: " + dueNow + " | Soon: " + soon;
     };//showTable()
     showTable()
 
@@ -84,7 +97,6 @@
       document.getElementById("nextBox").value = "";
     };//addGen()
 
-
     function updateGen() {
       let name = document.getElementById("nameBox").value.toUpperCase();
       let runningHr = document.getElementById("runBox").value;
@@ -107,20 +119,6 @@
       };// for
       document.getElementById("msg").textContent = "Not found";
     };//updateGen()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     function deleteGen(i) {
       let name = gens[i].name;
