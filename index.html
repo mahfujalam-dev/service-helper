@@ -110,6 +110,12 @@
         document.getElementById("msg").textContent = "Please write next PM hours";
         return;
       };
+      for (let i = 0; i < gens.length; i++) {
+        if (name === gens[i].name) {
+          document.getElementById("msg").textContent = name + " already in list";
+          return;
+        };
+      };//for
       let newGen = {
         name: name,
         runningHr: Number(document.getElementById("runBox").value),
@@ -122,6 +128,7 @@
       document.getElementById("nameBox").value = "";
       document.getElementById("runBox").value = "";
       document.getElementById("nextBox").value = "";
+
     };//addGen()
 
     function updateGen() {
@@ -245,7 +252,7 @@
       gens[i].pending = "";
       localStorage.setItem("pmTable", JSON.stringify(gens));
       showTable();
-      document.getElementById("msg").textContent = name + " pending cleared"
+      document.getElementById("msg").textContent = name + " pending cleared";
     };//clearRow()
   </script>
 
