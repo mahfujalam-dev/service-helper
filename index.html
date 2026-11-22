@@ -50,6 +50,8 @@
       let over = 0;
       let dueNow = 0;
       let soon = 0;
+      let pendingCount = 0;
+
       for (let i = 0; i < gens.length; i++) {
         let hrLeft = gens[i].nextPmHr - gens[i].runningHr;
         let rowStart = "<tr>";
@@ -71,6 +73,9 @@
         } else if (pending === "") {
           pending = "-";
         };
+        if (pending !== "-") {
+          pendingCount = pendingCount + 1;
+        };
         rows = rows + "<td>" + pending + "</td>";
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>";
         rows = rows + "</tr>";
@@ -84,7 +89,7 @@
         };
       };//for
       document.getElementById("pmTable").innerHTML = rows;
-      document.getElementById("summary").textContent = "Over: " + over + " | Due now: " + dueNow + " | Soon: " + soon;
+      document.getElementById("summary").textContent = "Over: " + over + " | Due now: " + dueNow + " | Soon: " + soon + " | Pending: " + pendingCount;
     };//showTable()
     showTable();
 
