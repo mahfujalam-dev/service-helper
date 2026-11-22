@@ -14,6 +14,7 @@
   <input id="nextBox" type="number">
   <button onclick="addGen()">Add</button>
   <button onclick="updateGen()">Update</button>
+  <button onclick="findGen()">Find</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
   <p id="summary"></p>
@@ -127,6 +128,21 @@
       showTable();
       document.getElementById("msg").textContent = name + " deleted";
     };//deleteGen()
+
+    function findGen() {
+      let name = document.getElementById("nameBox").value.toUpperCase();
+      if (name === "") {
+        document.getElementById("msg").textContent = "Please write generator name";
+        return;
+      };
+      for (let i = 0; i < gens.length; i++) {
+        if (name === gens[i].name) {
+          document.getElementById("msg").textContent = name + ": " + getPmStatus(gens[i]);
+          return;
+        };
+      };// for
+      document.getElementById("msg").textContent = "Not found";
+    };//findGen()
 
   </script>
 
