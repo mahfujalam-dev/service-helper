@@ -17,6 +17,7 @@
   <button onclick="updateGen()">Update</button>
   <button onclick="findGen()">Find</button>
   <button onclick="savePending()">Save pending</button>
+  <button onclick="pmDone()">PM done</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
   <p id="summary"></p>
@@ -175,6 +176,32 @@
       };//for
       document.getElementById("msg").textContent = "Not found";
     };//savePending()
+
+    function pmDone() {
+      let name = document.getElementById("nameBox").value.toUpperCase();
+      let runBox = document.getElementById("runBox").value;
+      if (name === "") {
+        document.getElementById("msg").textContent = "Please write generator name";
+        return;
+      };
+      if (runBox === "") {
+        document.getElementById("msg").textContent = "Please write running hours";
+        return;
+      };
+      for (let i = 0; i < gens.length; i++) {
+        if (name === gens[i].name) {
+          gens[i].runningHr = Number(document.getElementById("runBox").value);
+          gens[i].nextPmHr = Number(document.getElementById("runBox").value) + 250;
+          localStorage.setItem("pmTable", JSON.stringify(gens));
+          showTable();
+          document.getElementById("msg").textContent = name + " PM done, next PM at " + gens[i].nextPmHr;
+          document.getElementById("nameBox").value = "";
+          document.getElementById("runBox").value = "";
+          return;
+        };
+      };// for
+      document.getElementById("msg").textContent = "Not found";
+    };//pmDone()
   </script>
 
 </body>
