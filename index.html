@@ -18,6 +18,7 @@
   <button onclick="findGen()">Find</button>
   <button onclick="savePending()">Save pending</button>
   <button onclick="pmDone()">PM done</button>
+  <button onclick="clearPending()">Clear Pending</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
   <p id="summary"></p>
@@ -57,6 +58,8 @@
         rows = rows + "<td>" + getPmStatus(gens[i]) + "</td>";
         let pending = gens[i].pending;
         if (pending === undefined) {
+          pending = "-";
+        } else if (pending === "") {
           pending = "-";
         };
         rows = rows + "<td>" + pending + "</td>";
@@ -202,6 +205,25 @@
       };// for
       document.getElementById("msg").textContent = "Not found";
     };//pmDone()
+
+    function clearPending() {
+      let name = document.getElementById("nameBox").value.toUpperCase();
+      if (name === "") {
+        document.getElementById("msg").textContent = "Please write generator name";
+        return;
+      };
+      for (let i = 0; i < gens.length; i++) {
+        if (name === gens[i].name) {
+          gens[i].pending = "";
+          localStorage.setItem("pmTable", JSON.stringify(gens));
+          showTable();
+          document.getElementById("msg").textContent = name + " pending cleared";
+          document.getElementById("nameBox").value = "";
+          return;
+        };
+      };// for
+      document.getElementById("msg").textContent = "Not found";
+    };//clearPending()
   </script>
 
 </body>
