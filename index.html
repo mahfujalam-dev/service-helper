@@ -46,7 +46,7 @@
     };//getPmStatus(gens[0])
 
     function showTable() {
-      let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Status</th><th>Pending</th><th></th></tr>";
+      let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Status</th><th>Pending</th><th></th><th></th></tr>";
       let over = 0;
       let dueNow = 0;
       let soon = 0;
@@ -78,6 +78,7 @@
         };
         rows = rows + "<td>" + pending + "</td>";
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>";
+        rows = rows + "<td><button onclick='clearRow(" + i + ")'>clear</button></td>";
         rows = rows + "</tr>";
 
         if (hrLeft < 0) {
@@ -238,6 +239,14 @@
       };// for
       document.getElementById("msg").textContent = "Not found";
     };//clearPending()
+
+    function clearRow(i) {
+      let name = gens[i].name;
+      gens[i].pending = "";
+      localStorage.setItem("pmTable", JSON.stringify(gens));
+      showTable();
+      document.getElementById("msg").textContent = name + " pending cleared"
+    };//clearRow()
   </script>
 
 </body>
