@@ -69,7 +69,9 @@
     };//getPmStatus(gens[0])
 
     function showTable() {
-      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th></th> <th></th> <th></th> </tr>";
+      //headerStart
+      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th></th> <th></th> <th></th> <th></th> </tr>";
+      //headerEnd
       let over = 0;
       let dueNow = 0;
       let soon = 0;
@@ -89,6 +91,7 @@
           continue;
         };
 
+        //rowsStart
         let rowStart = "<tr>";
         if (hrLeft < 0) {
           rowStart = "<tr style = 'background-color: #f8c8c8'>";
@@ -127,8 +130,10 @@
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>";
         rows = rows + "<td><button onclick='clearRow(" + i + ")'>clear</button></td>";
         rows = rows + "<td><button onclick='waText(" + i + ")'>WA</button></td>";
+        rows = rows + "<td><button onclick='partsList(" + i + ")'>Parts</button></td>";
 
         rows = rows + "</tr>";
+        //rowsEnd
 
         if (hrLeft < 0) {
           over = over + 1;
@@ -311,16 +316,26 @@
     function waText(i) {
       let name = gens[i].name;
       let site = gens[i].site;
-      if(site === undefined){
+      if (site === undefined) {
         document.getElementById("msg").textContent = name + ", service done.";
         return;
-      }else if(site === ""){
+      } else if (site === "") {
         document.getElementById("msg").textContent = name + ", service done.";
         return;
-      }else{
+      } else {
         document.getElementById("msg").textContent = name + ", service done. " + site + ".";
       };
     };//waText()
+
+    function partsList(i) {
+      let name = gens[i].name;
+      let parts = "O, OF, DF";
+      let pending = gens[i].pending;
+      if (pending !== undefined && pending !== "") {
+        parts = parts + " + " + pending;
+      };
+      document.getElementById("msg").textContent = name + " PM parts: " + parts;
+    };//partsList(i)
 
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
