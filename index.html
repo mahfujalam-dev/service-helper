@@ -119,7 +119,8 @@
       let newGen = {
         name: name,
         runningHr: Number(document.getElementById("runBox").value),
-        nextPmHr: Number(document.getElementById("nextBox").value)
+        nextPmHr: Number(document.getElementById("nextBox").value),
+        pending: document.getElementById("pendingBox").value
       };
       gens.push(newGen);
       localStorage.setItem("pmTable", JSON.stringify(gens));
@@ -128,6 +129,7 @@
       document.getElementById("nameBox").value = "";
       document.getElementById("runBox").value = "";
       document.getElementById("nextBox").value = "";
+      document.getElementById("pendingBox").value = "";
 
     };//addGen()
 
