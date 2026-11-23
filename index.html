@@ -9,23 +9,31 @@
 
 <body>
   <h1>Service Helper</h1>
-  <input id="nameBox">
-  <input id="runBox" type="number">
-  <input id="nextBox" type="number">
-  <input id="pendingBox">
-  <button onclick="addGen()">Add</button>
+  <input id="nameBox" placeholder="Generator name">
+  <input id="runBox" type="number" placeholder="Running hr">
+  <input id="nextBox" type="number" placeholder="Next PM hr">
+  <input id="pendingBox" placeholder="Pending items">
+  <input id="siteBox" placeholder="site">
+
+  <button pl onclick="addGen()">Add</button>
   <button onclick="updateGen()">Update</button>
   <button onclick="findGen()">Find</button>
   <button onclick="savePending()">Save pending</button>
   <button onclick="pmDone()">PM done</button>
   <button onclick="clearPending()">Clear Pending</button>
-  <input id="hrDayBox" type="number">
+
+  <input id="hrDayBox" type="number" placeholder="Hr per day">
+
   <button onclick="setHrPerDay()">Set hr/day</button>
   <button onclick="showUrgentGen()">Show urgent</button>
   <button onclick="showAllGen()">Show all</button>
+
   <p id="msg"></p>
+
   <table id="pmTable" border="1"></table>
+
   <p id="summary"></p>
+
   <script>
     let gens = JSON.parse(localStorage.getItem("pmTable"));
     if (gens === null) {
@@ -57,7 +65,7 @@
     };//getPmStatus(gens[0])
 
     function showTable() {
-      let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Days left</th><th>Status</th><th>Pending</th><th></th><th></th></tr>";
+      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th></th> <th></th> </tr>";
       let over = 0;
       let dueNow = 0;
       let soon = 0;
@@ -84,10 +92,20 @@
         };
         rows = rows + rowStart;
         rows = rows + "<td>" + gens[i].name + "</td>";
+
+        let site = gens[i].site;
+        if (site === undefined) {
+          site = "-";
+        } else if (site === "") {
+          site = "-";
+        };
+        rows = rows + "<td>" + site + "</td>";
+
         rows = rows + "<td>" + gens[i].runningHr + "</td>";
         rows = rows + "<td>" + gens[i].nextPmHr + "</td>";
         rows = rows + "<td>" + daysLeft + "</td>";
         rows = rows + "<td>" + getPmStatus(gens[i]) + "</td>";
+
         let pending = gens[i].pending;
         if (pending === undefined) {
           pending = "-";
@@ -98,6 +116,7 @@
           pendingCount = pendingCount + 1;
         };
         rows = rows + "<td>" + pending + "</td>";
+
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>";
         rows = rows + "<td><button onclick='clearRow(" + i + ")'>clear</button></td>";
         rows = rows + "</tr>";
@@ -141,7 +160,8 @@
         name: name,
         runningHr: Number(document.getElementById("runBox").value),
         nextPmHr: Number(document.getElementById("nextBox").value),
-        pending: document.getElementById("pendingBox").value
+        pending: document.getElementById("pendingBox").value,
+        site: document.getElementById("siteBox").value
       };
       gens.push(newGen);
       localStorage.setItem("pmTable", JSON.stringify(gens));
@@ -151,6 +171,7 @@
       document.getElementById("runBox").value = "";
       document.getElementById("nextBox").value = "";
       document.getElementById("pendingBox").value = "";
+      document.getElementById("siteBox").value = "";
 
     };//addGen()
 
