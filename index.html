@@ -28,6 +28,7 @@
   <button onclick="showUrgentGen()">Show urgent</button>
   <button onclick="showAllGen()">Show all</button>
   <button onclick="showSiteGen()">Show site</button>
+  <button onclick="urgentParts()">Urgent parts</button>
 
   <p id="msg"></p>
 
@@ -336,6 +337,25 @@
       };
       document.getElementById("msg").textContent = name + " PM parts: " + parts;
     };//partsList(i)
+
+    function urgentParts() {
+      let count = 0;
+      let pendingList = "";
+      for (let i = 0; i < gens.length; i++) {
+        let hrLeft = Number(gens[i].nextPmHr - gens[i].runningHr);
+        if (hrLeft <= 50) {
+          count = count + 1;
+          if (gens[i].pending !== undefined && gens[i].pending !== "") {
+            pendingList = pendingList + gens[i].name + ": " + gens[i].pending + ". ";
+          };
+        };
+      };// for
+      if (count === 0) {
+        document.getElementById("msg").textContent = "No urgent PM";
+        return;
+      };
+      document.getElementById("msg").textContent = "Urgent PM: " + count + " gens. Need: O x" + count + ", OF x" + count + ", DF x" + count + ". Pending: " + pendingList;
+    };//urgentParts()
 
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
