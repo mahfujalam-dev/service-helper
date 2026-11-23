@@ -27,6 +27,7 @@
   <button onclick="setHrPerDay()">Set hr/day</button>
   <button onclick="showUrgentGen()">Show urgent</button>
   <button onclick="showAllGen()">Show all</button>
+  <button onclick="showSiteGen()">Show site</button>
 
   <p id="msg"></p>
 
@@ -50,6 +51,9 @@
     };
 
     let showMode = "all";
+
+    let siteFilter = "";
+
 
     function getPmStatus(gen) {
       let hrLeft = gen.nextPmHr - gen.runningHr;
@@ -79,6 +83,9 @@
         };
 
         if (showMode === "urgent" && hrLeft > 50) {
+          continue;
+        };
+        if (siteFilter !== "" && gens[i].site !== siteFilter) {
           continue;
         };
 
@@ -324,9 +331,22 @@
 
     function showAllGen() {
       showMode = "all";
+      siteFilter = "";
       showTable();
       document.getElementById("msg").textContent = "Showing all";
     };//showAllGen()
+
+    function showSiteGen() {
+      let siteName = document.getElementById("siteBox").value;
+      if (siteName === "") {
+        document.getElementById("msg").textContent = "Please write site name";
+        return;
+      };
+      siteFilter = document.getElementById("siteBox").value;
+      showTable();
+      document.getElementById("msg").textContent = "Showing site " + siteFilter;
+      document.getElementById("siteBox").value = "";
+    };//showSiteGen
   </script>
 
 </body>
