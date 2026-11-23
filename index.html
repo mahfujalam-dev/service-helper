@@ -21,6 +21,8 @@
   <button onclick="clearPending()">Clear Pending</button>
   <input id="hrDayBox" type="number">
   <button onclick="setHrPerDay()">Set hr/day</button>
+  <button onclick="showUrgentGen()">Show urgent</button>
+  <button onclick="showAllGen()">Show all</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
   <p id="summary"></p>
@@ -34,10 +36,12 @@
       ];
     };
     let hrPerDay = 10;
-    let saveHr = localStorage.getItem("hrPerDay")
+    let saveHr = localStorage.getItem("hrPerDay");
     if (saveHr !== null) {
       hrPerDay = Number(saveHr);
     };
+
+    let showMode = "all";
 
     function getPmStatus(gen) {
       let hrLeft = gen.nextPmHr - gen.runningHr;
@@ -65,6 +69,11 @@
         if (hrLeft < 0) {
           daysLeft = "-";
         };
+
+        if (showMode === "urgent" && hrLeft > 50) {
+          continue;
+        };
+
         let rowStart = "<tr>";
         if (hrLeft < 0) {
           rowStart = "<tr style = 'background-color: #f8c8c8'>";
@@ -285,6 +294,18 @@
       document.getElementById("msg").textContent = "Hr per day set to " + hrPerDay;
       document.getElementById("hrDayBox").value = "";
     };//setHrPerDay()
+
+    function showUrgentGen() {
+      showMode = "urgent";
+      showTable();
+      document.getElementById("msg").textContent = "Showing urgent only";
+    };//showUrgentGen()
+
+    function showAllGen() {
+      showMode = "all";
+      showTable();
+      document.getElementById("msg").textContent = "Showing all";
+    };//showAllGen()
   </script>
 
 </body>
