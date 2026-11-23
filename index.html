@@ -31,6 +31,7 @@
         { name: "G03", runningHr: 500, nextPmHr: 500, pending: "" }
       ];
     };
+    let hrPerDay = 10;
 
     function getPmStatus(gen) {
       let hrLeft = gen.nextPmHr - gen.runningHr;
@@ -46,7 +47,7 @@
     };//getPmStatus(gens[0])
 
     function showTable() {
-      let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Status</th><th>Pending</th><th></th><th></th></tr>";
+      let rows = "<tr><th>Generator</th><th>Running Hr</th><th>Next PM</th><th>Days left</th><th>Status</th><th>Pending</th><th></th><th></th></tr>";
       let over = 0;
       let dueNow = 0;
       let soon = 0;
@@ -54,6 +55,10 @@
 
       for (let i = 0; i < gens.length; i++) {
         let hrLeft = gens[i].nextPmHr - gens[i].runningHr;
+        let daysLeft = Math.floor(hrLeft / hrPerDay);
+        if (hrLeft < 0) {
+          daysLeft = "-";
+        }
         let rowStart = "<tr>";
         if (hrLeft < 0) {
           rowStart = "<tr style = 'background-color: #f8c8c8'>";
@@ -66,6 +71,7 @@
         rows = rows + "<td>" + gens[i].name + "</td>";
         rows = rows + "<td>" + gens[i].runningHr + "</td>";
         rows = rows + "<td>" + gens[i].nextPmHr + "</td>";
+        rows = rows + "<td>" + daysLeft + "</td>";
         rows = rows + "<td>" + getPmStatus(gens[i]) + "</td>";
         let pending = gens[i].pending;
         if (pending === undefined) {
