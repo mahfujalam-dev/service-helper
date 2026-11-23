@@ -30,6 +30,7 @@
   <button onclick="showSiteGen()">Show site</button>
   <button onclick="urgentParts()">Urgent parts</button>
   <button onclick="siteSummary()">Site summary</button>
+  <button onclick="nextJob()">Next Job</button>
 
   <p id="msg"></p>
 
@@ -381,6 +382,23 @@
       };
       document.getElementById("msg").textContent = site + ": " + total + " gens, " + urgent + " urgent";
     };//siteSummary()
+
+    function nextJob() {
+      if (gens.length === 0) {
+        document.getElementById("msg").textContent = "No generator";
+        return;
+      };
+      let bestI = 0;
+      let bestLeft = Number(gens[0].nextPmHr - gens[0].runningHr);
+      for (let i = 0; i < gens.length; i++) {
+        let hrLeft = Number(gens[i].nextPmHr - gens[i].runningHr);
+        if (hrLeft < bestLeft) {
+          bestLeft = hrLeft;
+          bestI = i;
+        };
+      };//for
+      document.getElementById("msg").textContent = "Next PM: " + gens[bestI].name + ", " + getPmStatus(gens[bestI]);
+    };//nextJob()
 
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
