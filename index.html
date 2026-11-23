@@ -69,7 +69,7 @@
     };//getPmStatus(gens[0])
 
     function showTable() {
-      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th></th> <th></th> </tr>";
+      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th></th> <th></th> <th></th> </tr>";
       let over = 0;
       let dueNow = 0;
       let soon = 0;
@@ -126,6 +126,8 @@
 
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>";
         rows = rows + "<td><button onclick='clearRow(" + i + ")'>clear</button></td>";
+        rows = rows + "<td><button onclick='waText(" + i + ")'>WA</button></td>";
+
         rows = rows + "</tr>";
 
         if (hrLeft < 0) {
@@ -306,6 +308,20 @@
       document.getElementById("msg").textContent = name + " pending cleared";
     };//clearRow()
 
+    function waText(i) {
+      let name = gens[i].name;
+      let site = gens[i].site;
+      if(site === undefined){
+        document.getElementById("msg").textContent = name + ", service done.";
+        return;
+      }else if(site === ""){
+        document.getElementById("msg").textContent = name + ", service done."
+        return;
+      }else{
+        document.getElementById("msg").textContent = name + ", service done. " + site + " .";
+      };
+    };//waText()
+
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
       if (hrDay === "") {
@@ -347,6 +363,8 @@
       document.getElementById("msg").textContent = "Showing site " + siteFilter;
       document.getElementById("siteBox").value = "";
     };//showSiteGen
+
+
   </script>
 
 </body>
