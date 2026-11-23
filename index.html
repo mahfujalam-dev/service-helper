@@ -19,6 +19,8 @@
   <button onclick="savePending()">Save pending</button>
   <button onclick="pmDone()">PM done</button>
   <button onclick="clearPending()">Clear Pending</button>
+  <input id="hrDayBox" type="number">
+  <button onclick="setHrPerDay()">Set hr/day</button>
   <p id="msg"></p>
   <table id="pmTable" border="1"></table>
   <p id="summary"></p>
@@ -32,6 +34,10 @@
       ];
     };
     let hrPerDay = 10;
+    let saveHr = localStorage.getItem("hrPerDay")
+    if (saveHr !== null) {
+      hrPerDay = Number(saveHr);
+    };
 
     function getPmStatus(gen) {
       let hrLeft = gen.nextPmHr - gen.runningHr;
@@ -58,7 +64,7 @@
         let daysLeft = Math.floor(hrLeft / hrPerDay);
         if (hrLeft < 0) {
           daysLeft = "-";
-        }
+        };
         let rowStart = "<tr>";
         if (hrLeft < 0) {
           rowStart = "<tr style = 'background-color: #f8c8c8'>";
@@ -262,6 +268,23 @@
       showTable();
       document.getElementById("msg").textContent = name + " pending cleared";
     };//clearRow()
+
+    function setHrPerDay() {
+      let hrDay = document.getElementById("hrDayBox").value;
+      if (hrDay === "") {
+        document.getElementById("msg").textContent = "Please write hours per day";
+        return;
+      };
+      if (Number(hrDay) <= 0) {
+        document.getElementById("msg").textContent = "Hours must be more than 0";
+        return;
+      };
+      hrPerDay = Number(hrDay);
+      localStorage.setItem("hrPerDay", JSON.stringify(hrPerDay));
+      showTable();
+      document.getElementById("msg").textContent = "Hr per day set to " + hrPerDay;
+      document.getElementById("hrDayBox").value = "";
+    };//setHrPerDay()
   </script>
 
 </body>
