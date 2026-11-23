@@ -29,6 +29,7 @@
   <button onclick="showAllGen()">Show all</button>
   <button onclick="showSiteGen()">Show site</button>
   <button onclick="urgentParts()">Urgent parts</button>
+  <button onclick="siteSummary()">Site summary</button>
 
   <p id="msg"></p>
 
@@ -356,6 +357,30 @@
       };
       document.getElementById("msg").textContent = "Urgent PM: " + count + " gens. Need: O x" + count + ", OF x" + count + ", DF x" + count + ". Pending: " + pendingList;
     };//urgentParts()
+
+    function siteSummary() {
+      let site = document.getElementById("siteBox").value;
+      if (site === "") {
+        document.getElementById("msg").textContent = "Please write site name";
+        return;
+      };
+      let total = 0;
+      let urgent = 0;
+      for (let i = 0; i < gens.length; i++) {
+        if (site === gens[i].site) {
+          total = total + 1;
+          let hrLeft = Number(gens[i].nextPmHr - gens[i].runningHr);
+          if (hrLeft <= 50) {
+            urgent = urgent + 1;
+          };
+        };
+      };//for
+      if (total === 0) {
+        document.getElementById("msg").textContent = "No generator at " + site;
+        return
+      };
+      document.getElementById("msg").textContent = site + ": " + total + " gens, " + urgent + " urgent";
+    };//siteSummary()
 
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
