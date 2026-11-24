@@ -32,6 +32,7 @@
   <button onclick="siteSummary()">Site summary</button>
   <button onclick="nextJob()">Next Job</button>
   <button onclick="pendingList()">Pending List</button>
+  <button onclick="changeSite()">Change Site</button>
 
   <p id="msg"></p>
 
@@ -401,6 +402,7 @@
       document.getElementById("msg").textContent = "Next PM: " + gens[bestI].name + ", " + getPmStatus(gens[bestI]);
     };//nextJob()
 
+    //pendingList()
     function pendingList() {
       let count = 0;
       let list = "";
@@ -415,7 +417,35 @@
         return;
       };
       document.getElementById("msg").textContent = "Pending ( " + count + " ): " + list;
-    };//pendingList()
+    };
+    //pendingList()
+
+    //changeSite()
+    function changeSite() {
+      let name = document.getElementById("nameBox").value.toUpperCase();
+      let site = document.getElementById("siteBox").value;
+      if (name === "") {
+        document.getElementById("msg").textContent = "Write generator name";
+        return;
+      };
+      if (site === "") {
+        document.getElementById("msg").textContent = "Write site name";
+        return;
+      };
+      for (let i = 0; i < gens.length; i++) {
+        if (gens[i].name === name) {
+          gens[i].site = site;
+          localStorage.setItem("pmTable", JSON.stringify(gens));
+          showTable();
+          document.getElementById("msg").textContent = name + " site: " + site;
+          document.getElementById("nameBox").value = "";
+          document.getElementById("siteBox").value = "";
+          return;
+        };
+      };//for
+      document.getElementById("msg").textContent = "Not found";
+    };
+    //changeSite()
 
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
