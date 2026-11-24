@@ -244,7 +244,15 @@
       };
       for (let i = 0; i < gens.length; i++) {
         if (name === gens[i].name) {
-          document.getElementById("msg").textContent = name + ": " + getPmStatus(gens[i]);
+          let pmCount = gens[i].pmCount;
+          if (pmCount === undefined) {
+            pmCount = 0;
+          };
+          let lastPm = gens[i].lastPm;
+          if (lastPm === undefined) {
+            lastPm = "-";
+          };
+          document.getElementById("msg").textContent = name + ": " + getPmStatus(gens[i]) + " | PMs done: " + pmCount + " | Last PM: " + lastPm;
           return;
         };
       };// for
@@ -294,6 +302,11 @@
           gens[i].nextPmHr = Number(document.getElementById("runBox").value) + 250;
           let today = new Date().toLocaleDateString("en-GB");
           gens[i].lastPm = today;
+          if (gens[i].pmCount === undefined) {
+            gens[i].pmCount = 1;
+          } else {
+            gens[i].pmCount = gens[i].pmCount + 1;
+          };
           localStorage.setItem("pmTable", JSON.stringify(gens));
           showTable();
           document.getElementById("msg").textContent = name + " PM done, next PM at " + gens[i].nextPmHr;
