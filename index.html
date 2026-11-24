@@ -26,6 +26,7 @@
 
   <button onclick="setHrPerDay()">Set hr/day</button>
   <button onclick="showUrgentGen()">Show urgent</button>
+  <button onclick="showOverGen()">Show Over</button>
   <button onclick="showAllGen()">Show all</button>
   <button onclick="showSiteGen()">Show site</button>
   <button onclick="urgentParts()">Urgent parts</button>
@@ -92,6 +93,11 @@
         if (showMode === "urgent" && hrLeft > 50) {
           continue;
         };
+
+        if (showMode === "over" && hrLeft >= 0) {
+          continue;
+        };
+
         if (siteFilter !== "" && gens[i].site !== siteFilter) {
           continue;
         };
@@ -469,6 +475,15 @@
       showTable();
       document.getElementById("msg").textContent = "Showing urgent only";
     };//showUrgentGen()
+
+    //showOverGen()
+    function showOverGen() {
+      showMode = "over";
+      showTable();
+      document.getElementById("msg").textContent = "Showing over only";
+
+    };
+    //showOverGen()
 
     function showAllGen() {
       showMode = "all";
