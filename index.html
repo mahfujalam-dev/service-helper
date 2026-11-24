@@ -76,7 +76,7 @@
 
     function showTable() {
       //headerStart
-      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th></th> <th></th> <th></th> <th></th> </tr>";
+      let rows = "<tr> <th>Generator</th> <th>Site</th> <th>Running Hr</th> <th>Next PM</th> <th>Days left</th> <th>Status</th> <th>Pending</th> <th>Last PM</th> <th></th> <th></th> <th></th> <th></th> </tr>";
       //headerEnd
       let over = 0;
       let dueNow = 0;
@@ -137,6 +137,11 @@
           pendingCount = pendingCount + 1;
         };
         rows = rows + "<td>" + pending + "</td>";
+        let lastPm = gens[i].lastPm;
+        if (lastPm === undefined) {
+          lastPm = "-";
+        };
+        rows = rows + "<td>" + lastPm + "</td>";
 
         rows = rows + "<td><button onclick='deleteGen(" + i + ")'>delete</button></td>";
         rows = rows + "<td><button onclick='clearRow(" + i + ")'>clear</button></td>";
@@ -271,6 +276,7 @@
       document.getElementById("msg").textContent = "Not found";
     };//savePending()
 
+    //pmDone()
     function pmDone() {
       let name = document.getElementById("nameBox").value.toUpperCase();
       let runBox = document.getElementById("runBox").value;
@@ -286,6 +292,8 @@
         if (name === gens[i].name) {
           gens[i].runningHr = Number(document.getElementById("runBox").value);
           gens[i].nextPmHr = Number(document.getElementById("runBox").value) + 250;
+          let today = new Date().toLocaleDateString("en-GB");
+          gens[i].lastPm = today;
           localStorage.setItem("pmTable", JSON.stringify(gens));
           showTable();
           document.getElementById("msg").textContent = name + " PM done, next PM at " + gens[i].nextPmHr;
