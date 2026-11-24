@@ -31,7 +31,7 @@
   <button onclick="urgentParts()">Urgent parts</button>
   <button onclick="siteSummary()">Site summary</button>
   <button onclick="nextJob()">Next Job</button>
-  <button onclick="pendingList()">Pendind List</button>
+  <button onclick="pendingList()">Pending List</button>
 
   <p id="msg"></p>
 
@@ -407,7 +407,7 @@
       for (let i = 0; i < gens.length; i++) {
         if (gens[i].pending !== undefined && gens[i].pending !== "") {
           count = count + 1;
-          list = list + gens[i].name + ": " + gens[i].pending + ".";
+          list = list + gens[i].name + ": " + gens[i].pending + ". ";
         };
       };//for
       if (count === 0) {
