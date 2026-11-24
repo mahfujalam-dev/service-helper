@@ -31,6 +31,7 @@
   <button onclick="urgentParts()">Urgent parts</button>
   <button onclick="siteSummary()">Site summary</button>
   <button onclick="nextJob()">Next Job</button>
+  <button onclick="pendingList()">Pendind List</button>
 
   <p id="msg"></p>
 
@@ -399,6 +400,22 @@
       };//for
       document.getElementById("msg").textContent = "Next PM: " + gens[bestI].name + ", " + getPmStatus(gens[bestI]);
     };//nextJob()
+
+    function pendingList() {
+      let count = 0;
+      let list = "";
+      for (let i = 0; i < gens.length; i++) {
+        if (gens[i].pending !== undefined && gens[i].pending !== "") {
+          count = count + 1;
+          list = list + gens[i].name + ": " + gens[i].pending + ".";
+        };
+      };//for
+      if (count === 0) {
+        document.getElementById("msg").textContent = "No pending";
+        return;
+      };
+      document.getElementById("msg").textContent = "Pending ( " + count + " ): " + list;
+    };//pendingList()
 
     function setHrPerDay() {
       let hrDay = document.getElementById("hrDayBox").value;
