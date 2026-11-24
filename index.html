@@ -335,14 +335,15 @@
     function waText(i) {
       let name = gens[i].name;
       let site = gens[i].site;
+      let today = new Date().toLocaleDateString("en-GB");
       if (site === undefined) {
-        document.getElementById("msg").textContent = name + ", service done.";
+        document.getElementById("msg").textContent = name + ", service done on " + today + ".";
         return;
       } else if (site === "") {
-        document.getElementById("msg").textContent = name + ", service done.";
+        document.getElementById("msg").textContent = name + ", service done on " + today + ".";
         return;
       } else {
-        document.getElementById("msg").textContent = name + ", service done. " + site + ".";
+        document.getElementById("msg").textContent = name + ", service done on " + today + ". Site: " + site + ".";
       };
     };//waText()
 
