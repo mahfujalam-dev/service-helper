@@ -5,35 +5,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+  <style>
+    div {
+      margin-bottom: 8px;
+    }
+
+    td,
+    th {
+      padding: 4px 8px;
+    }
+  </style>
 </head>
 
 <body>
   <h1>Service Helper</h1>
-  <input id="nameBox" placeholder="Generator name">
-  <input id="runBox" type="number" placeholder="Running hr">
-  <input id="nextBox" type="number" placeholder="Next PM hr">
-  <input id="pendingBox" placeholder="Pending items">
-  <input id="siteBox" placeholder="Site">
+  <div> <!-- 1 (box): 5টা box -->
+    <input id="nameBox" placeholder="Generator name">
+    <input id="runBox" type="number" placeholder="Running hr">
+    <input id="nextBox" type="number" placeholder="Next PM hr">
+    <input id="pendingBox" placeholder="Pending items">
+    <input id="siteBox" placeholder="Site">
+  </div>
 
-  <button onclick="addGen()">Add</button>
-  <button onclick="updateGen()">Update</button>
-  <button onclick="findGen()">Find</button>
-  <button onclick="savePending()">Save pending</button>
-  <button onclick="pmDone()">PM done</button>
-  <button onclick="clearPending()">Clear Pending</button>
+  <div> <!-- 2 (generator-এর কাজ) -->
+    <button onclick="addGen()">Add</button>
+    <button onclick="updateGen()">Update</button>
+    <button onclick="findGen()">Find</button>
+    <button onclick="savePending()">Save pending</button>
+    <button onclick="pmDone()">PM done</button>
+    <button onclick="clearPending()">Clear Pending</button>
+    <button onclick="changeSite()">Change Site</button>
+  </div>
 
-  <input id="hrDayBox" type="number" placeholder="Hr per day">
+  <div> <!-- 3 (filter) -->
+    <button onclick="showUrgentGen()">Show urgent</button>
+    <button onclick="showOverGen()">Show Over</button>
+    <button onclick="showAllGen()">Show all</button>
+    <button onclick="showSiteGen()">Show site</button>
+  </div>
 
-  <button onclick="setHrPerDay()">Set hr/day</button>
-  <button onclick="showUrgentGen()">Show urgent</button>
-  <button onclick="showOverGen()">Show Over</button>
-  <button onclick="showAllGen()">Show all</button>
-  <button onclick="showSiteGen()">Show site</button>
-  <button onclick="urgentParts()">Urgent parts</button>
-  <button onclick="siteSummary()">Site summary</button>
-  <button onclick="nextJob()">Next Job</button>
-  <button onclick="pendingList()">Pending List</button>
-  <button onclick="changeSite()">Change Site</button>
+  <div> <!-- 4 (report) -->
+    <button onclick="urgentParts()">Urgent parts</button>
+    <button onclick="siteSummary()">Site summary</button>
+    <button onclick="nextJob()">Next Job</button>
+    <button onclick="pendingList()">Pending List</button>
+  </div>
+
+  <div> <!-- 5 (setting) -->
+    <input id="hrDayBox" type="number" placeholder="Hr per day">
+    <button onclick="setHrPerDay()">Set hr/day</button>
+  </div>
 
   <p id="msg"></p>
 
